@@ -1,7 +1,10 @@
+require('dotenv').config();
+
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+const mongo_url=String(process.env.URL);
 
-mongoose.connect('mongodb+srv://abhi575:aa@cluster0.zg65r.mongodb.net/todo-list?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect(mongo_url, { useNewUrlParser: true });
 
 var dataSchema = new mongoose.Schema({
     item: String
