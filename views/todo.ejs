@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo List</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href = "../assets/styles.css" rel = "stylesheet" type = "text/css">
+        <script href = "../assets/todo-list.js"></script>
+        
+    </head>
+    <body>
+        <h1 class = "heading">To-do List</h1>
+        <div id = "todo-table">
+            <form>
+                <input type = "text" name = "item" placeholder = "Add new item" required>
+                <button type = "submit">Add Item</button>
+            </form>
+            <ul>
+                <% for(i in todos) { %>
+                    <li><%= todos[i].item %></li>
+                <% } %>
+            </ul>
+        </div>
+        <script>
+            $(document).ready(function(){
+
+$('form').on('submit', function(){
+
+    var item = $('form input');
+    var todo = {item: item.val()};
+
+    $.ajax({
+      type: 'POST',
+      url: '/',
+      data: todo,
+      success: function(data){
+        location.reload();
+      }
+    });
+
+    return false;
+
+});
+
+$('li').on('click', function(){
+    var item = $(this).text().replace(/ /g, " ");
+    console.log('item');
+    $.ajax({
+      type: 'DELETE',
+      url: '/' + item,
+      success: function(data){
+        location.reload();
+      }
+    });
+});
+
+});
+        </script>
+    </body>
+</html>
